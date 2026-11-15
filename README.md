@@ -17,6 +17,7 @@
 index.html            разметка вкладок и приветственного экрана
 css/app.css           все стили
 data/supplements.js   добавки (N), цели (G), связи (E), описания (INFO), английские названия
+data/sources.js       источники (PubMed) для связей
 data/plan.js          слоты расписания и готовые наборы (STACKS)
 data/training.js      карточки тренировок
 data/problems.js      раздел «Проблемы»

@@ -445,3 +445,8 @@ svg#g.ego .spoke,svg#g.find .spoke,svg#g.ego .hub,svg#g.find .hub{opacity:0;poin
 .hub.sm text{font-size:9.5px}
 .hub circle{fill-opacity:.1;stroke-width:1.2}
 .node .arc{stroke-width:2.5px}
+.logo{font-family:var(--f-mono);font-weight:700;letter-spacing:-.04em}
+.logo em{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:var(--muted)}
+.srcs{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13.5px}
+.srcs a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--muted);text-underline-offset:3px}
+.srcs a:hover{text-decoration-color:var(--ink)}

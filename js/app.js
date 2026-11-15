@@ -366,6 +366,7 @@ function renderNote(){
     const e=E[s.i];
     note.innerHTML=`<div><span class="kind"><span class="dot ${e.t}" style="display:inline-block;margin:0 6px 0 0"></span>${TNAME[e.t]} · данные ${e.ev}</span><h2>${esc(byId[e.a].en)} + ${esc(byId[e.b].en)}</h2></div>
       <p>${esc(e.txt)}</p>
+      ${(()=>{const src=SRC[e.a+"|"+e.b]||SRC[e.b+"|"+e.a];return src?`<section class="ns"><h4>Источники</h4><ul class="srcs">${src.map(x=>`<li><a href="${x.pmid?"https://pubmed.ncbi.nlm.nih.gov/"+x.pmid+"/":"https://pmc.ncbi.nlm.nih.gov/articles/"+x.pmc+"/"}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.y?` <span class="kind">${x.y}</span>`:""}${x.pmid&&x.pmc?` · <a href="https://pmc.ncbi.nlm.nih.gov/articles/${x.pmc}/" target="_blank" rel="noopener">полный текст</a>`:""}</li>`).join("")}</ul></section>`:'<p class="kind">Источники для этой связи ещё не проверены.</p>'})()}
       <ul class="list"><li><button data-n="${e.a}"><span></span><span>Все связи: <b>${esc(byId[e.a].en)}</b></span></button></li>
       <li><button data-n="${e.b}"><span></span><span>Все связи: <b>${esc(byId[e.b].en)}</b></span></button></li></ul>`;
   }
