@@ -391,7 +391,7 @@ function renderTable(){
   const cnt={};E.forEach(e=>{cnt[e.t]=(cnt[e.t]||0)+1});let last=null;
   document.getElementById("table").innerHTML=[...E].sort((x,y)=>cmp[sortSt.k](x,y)*sortSt.d).map(e=>{
     const head=sortSt.k==="type"&&e.t!==last?`<div class="tgrp" data-t="${e.t}"><span class="dot ${e.t}"></span>${TNAME[e.t]} <span class="kind">${cnt[e.t]}</span></div>`:"";last=e.t;
-    return head+`<button class="trow" data-i="${e.i}" aria-expanded="false"><span class="pr">${esc(pairName(e))}</span><span class="ty"><span class="dot ${e.t}"></span>${TNAME[e.t]}</span><span class="tx">${esc(e.txt)}</span><span class="ev">${e.ev}</span><span class="go">Показать на карте →</span></button>`}).join("");
+    return head+`<button class="trow" data-i="${e.i}" aria-expanded="false"><span class="pr">${esc(pairName(e))}</span><span class="ty"><span class="dot ${e.t}"></span>${TNAME[e.t]}</span><span class="tx">${esc(e.txt)}</span><span class="ev">${e.ev}</span><span class="go">Показать на карте</span></button>`}).join("");
   document.querySelectorAll("[data-sort]").forEach(b=>{const on=b.dataset.sort===sortSt.k;b.setAttribute("aria-pressed",on);b.querySelector("i").textContent=on?(sortSt.d>0?"▲":"▼"):""});
   tvis();
 }
@@ -599,8 +599,9 @@ applyView();renderNote();
   const base=STACKS.find(x=>x.id==="base");
   document.getElementById("wList").innerHTML=[["Что для чего",`${N.filter(n=>n.g.length).length} добавки по ${RING.length} целям, с пометкой, где данные сильные, а где слабые`],["Что с чем",`${E.length} связей: что усиливает друг друга и что надо разносить по времени`],["Когда принимать","расписание на день под твой набор"]].map(([a,b])=>`<li><span><b>${a}.</b> ${b}</span></li>`).join("");
   document.getElementById("wBase").textContent=base.items.map(x=>byId[x[0]].en).join(", ")+". Закрывает самые частые дефициты; дальше набор можно менять под себя.";
-  const close=()=>{w.hidden=true;try{localStorage.setItem(KEY,"1")}catch(_){}};
+  const rest=[...document.body.children].filter(x=>x!==w&&x.tagName!=="SCRIPT"),inert=v=>rest.forEach(x=>{x.inert=v});
+  const close=()=>{w.hidden=true;inert(false);try{localStorage.setItem(KEY,"1")}catch(_){}};
   document.getElementById("wAdd").addEventListener("click",()=>{picked.add("base");save();renderPlan();applyView();close()});
   document.getElementById("wSkip").addEventListener("click",close);
   w.addEventListener("keydown",ev=>{if(ev.key==="Escape")close()});
-  w.hidden=false;document.getElementById("wSkip").focus()})();
+  w.hidden=false;inert(true);document.getElementById("wAdd").focus()})();
