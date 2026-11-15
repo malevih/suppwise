@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Карта добавок: какие витамины, минералы и добавки помогают друг другу, какие мешают, когда их принимать и какие тренировки дают больше всего пользы.">
+<title>Suppwise — карта добавок</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;700;800&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="topbar"><div class="tb">
+  <span class="logo">Supp<em>wise</em></span>
+  <nav class="tabs" role="tablist">
+    <button class="tab" id="tab-graph" role="tab" aria-selected="true" aria-controls="view-graph">Карта</button>
+    <button class="tab" id="tab-links" role="tab" aria-selected="false" aria-controls="view-links">Связи</button>
+    <button class="tab" id="tab-prob" role="tab" aria-selected="false" aria-controls="view-prob">Проблемы</button>
+    <button class="tab" id="tab-plan" role="tab" aria-selected="false" aria-controls="view-plan"><span class="tl-long">Когда принимать</span><span class="tl-short">Приём</span></button>
+    <button class="tab" id="tab-train" role="tab" aria-selected="false" aria-controls="view-train"><span class="tl-long">Тренировки</span><span class="tl-short">Спорт</span></button>
+    <button class="tab" id="tab-notes" role="tab" aria-selected="false" aria-controls="view-notes">Записи</button>
+  </nav>
+</div></header>
+
+<div class="wrap">
+  <!-- GRAPH -->
+  <section class="view" id="view-graph" role="tabpanel" aria-labelledby="tab-graph">
+    <div class="filters">
+      <div class="frow" id="goalRow" role="group" aria-label="Цель" hidden><span class="flabel">Цель</span></div>
+      <div class="frow" role="group" aria-label="Связи между добавками">
+        <span class="flabel">Вид</span>
+        <button class="chip shw" data-s="none" aria-pressed="true">По целям</button>
+        <button class="chip shw" data-s="anti" aria-pressed="false"><span class="ln anti"></span>Конфликты</button>
+        <button class="chip shw" data-s="all" aria-pressed="false">Все связи</button>
+        <label class="chk" for="hideC"><input type="checkbox" id="hideC">Без слабых данных (C)</label>
+        <button class="chip" id="mineBtn" aria-pressed="false" hidden>Мой набор</button>
+      </div>
+      <div class="frow">
+        <label class="flabel" for="q">Поиск</label>
+        <div class="search"><div class="qwrap"><input id="q" type="text" placeholder="Начни вводить: креатин, цинк, zinc…" autocomplete="off" spellcheck="false" enterkeyhint="search"><button class="qclear" id="qclear" type="button" aria-label="Очистить поиск" hidden>✕</button></div><span id="qcount" class="kind"></span></div>
+      </div>
+    </div>
+
+    <div class="goalgrid" id="glist" hidden></div>
+
+    <div class="stage" id="stage">
+      <svg id="g" aria-label="Граф взаимодействий добавок"></svg>
+      <button class="chip sm maphelp" id="mapHelp" type="button">Как читать карту</button>
+      <button class="chip sm mapback" id="mapBack" type="button" hidden>← Вся карта</button>
+      <aside class="note" id="note" aria-live="polite"></aside>
+    </div>
+
+  </section>
+
+  <section class="view" id="view-links" role="tabpanel" aria-labelledby="tab-links" hidden>
+    <div class="filters">
+      <div class="frow" role="group" aria-label="Тип связи">
+        <span class="flabel">Тип</span>
+        <button class="chip trel" data-f="all" aria-pressed="true">Все</button>
+        <button class="chip trel" data-f="syn" aria-pressed="false"><span class="ln syn"></span>Помогают</button>
+        <button class="chip trel" data-f="anti" aria-pressed="false"><span class="ln anti"></span>Мешают</button>
+        <button class="chip trel" data-f="warn" aria-pressed="false"><span class="ln warn"></span>Зависит от дозы</button>
+        <label class="chk" for="tHideC"><input type="checkbox" id="tHideC">Без слабых данных (C)</label>
+      </div>
+    </div>
+    <div>
+      <div class="thead"><span class="sortlbl">Сортировка:</span><button class="sortb" data-sort="pair">Пара<i></i></button><button class="sortb" data-sort="type">Тип<i></i></button><span class="tcol">Что происходит</span><button class="sortb" data-sort="ev">Данные<i></i></button></div>
+      <div class="table" id="table"></div>
+    </div>
+  </section>
+
+  <!-- PROBLEMS -->
+  <section class="view" id="view-prob" role="tabpanel" aria-labelledby="tab-prob" hidden>
+    <div class="prob"><nav class="plist" id="plist" aria-label="Проблемы"></nav><div class="pbody" id="pbody"></div></div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="view" id="view-plan" role="tabpanel" aria-labelledby="tab-plan" hidden>
+    <div class="pareto">
+      <div>
+        <h2 class="big">20% добавок, которые дают 80% результата</h2>
+        <p class="lead">Пять наборов по порядку важности. Начни с первого, остальные добавляй под свою цель. Отметь нужные наборы, и ниже соберётся расписание на день.</p>
+      </div>
+      <div class="first">
+        <span class="lbl">Сначала анализы</span>
+        <p>25(OH)D, ферритин, B12, ТТГ. Для мужского здоровья ещё общий тестостерон. Так станет понятно, чего реально не хватает, и не придётся пить лишнее.</p>
+      </div>
+    </div>
+    <div class="stacks" id="stacks"></div>
+
+    <div class="box">
+      <div class="shead"><div><h2>Собери свой набор</h2><p class="who">Нажми на любую добавку, чтобы добавить её или убрать. Выбранные наборы выше уже отмечены.</p></div><button class="chip sm" id="resetSet">Сбросить</button></div>
+      <div class="pchips" id="pchips"></div>
+    </div>
+
+    <div class="box advice" id="clash" hidden><h2>Подсказки к твоему набору</h2><div class="adv"><section id="advBad"></section><section id="advGood"></section></div></div>
+
+    <div class="schedhead">
+      <h2 id="schedTitle">Расписание</h2>
+      <div class="frow" role="group" aria-label="Что показать в расписании">
+        <button class="chip sm" id="sched-mine" data-m="mine" aria-pressed="true">Мой набор</button>
+        <button class="chip sm" id="sched-all" data-m="all" aria-pressed="false">Все добавки</button>
+      </div>
+    </div>
+    <div class="tl" id="plan"></div>
+
+    <div class="box skip">
+      <h2>Что обычно можно не пить</h2>
+      <ul id="skip"></ul>
+    </div>
+    <div class="box">
+      <h2>Что разносить по времени</h2>
+      <ul>
+        <li>Железо и кальций: минимум 2 часа между ними.</li>
+        <li>Железо и цинк: в разные приёмы.</li>
+        <li>Кофе и чай: не раньше чем через час после железа или цинка.</li>
+        <li>Цинк больше 40 мг в день несколько месяцев подряд: добавь 1–2 мг меди.</li>
+        <li>Креатин и таурин можно пить в любое время, главное каждый день.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- TRAINING -->
+  <section class="view" id="view-train" role="tabpanel" aria-labelledby="tab-train" hidden>
+    <div id="train"></div>
+  </section>
+
+  <section class="view" id="view-notes" role="tabpanel" aria-labelledby="tab-notes" hidden>
+    <div id="notes"></div>
+  </section>
+
+  <div class="foot">
+    <p>Данные: <b>A</b> — клинические исследования, эффект воспроизводится. <b>B</b> — понятный механизм и часть клинических данных или большие наблюдения. <b>C</b> — слабые данные, исследования на животных или эффект только на больших дозах.</p>
+    <p>Это справка, а не назначение. Железо, йод, витамин A и большие дозы витамина D принимают по анализам. Если пьёшь лекарства (антикоагулянты, гормоны щитовидной железы, антибиотики, снотворные, антидепрессанты), сверься с врачом.</p>
+  </div>
+</div>
+
+<div class="welcome" id="welcome" hidden role="dialog" aria-modal="true" aria-labelledby="wTitle">
+  <div class="wcard">
+    <svg class="wart" viewBox="0 0 200 120" aria-hidden="true">
+      <g class="wlines"><line x1="100" y1="60" x2="36" y2="30"/><line x1="100" y1="60" x2="164" y2="30"/><line x1="100" y1="60" x2="30" y2="84"/><line x1="100" y1="60" x2="170" y2="84"/><line x1="100" y1="60" x2="100" y2="14"/><line x1="100" y1="60" x2="72" y2="106"/><line x1="100" y1="60" x2="128" y2="106"/></g>
+      <circle class="wd" style="--i:0;fill:var(--g-sleep)" cx="100" cy="14" r="7"/><circle class="wd" style="--i:1;fill:var(--g-infl)" cx="164" cy="30" r="7"/><circle class="wd" style="--i:2;fill:var(--g-immune)" cx="170" cy="84" r="7"/><circle class="wd" style="--i:3;fill:var(--g-bones)" cx="128" cy="106" r="7"/><circle class="wd" style="--i:4;fill:var(--g-heart)" cx="72" cy="106" r="7"/><circle class="wd" style="--i:5;fill:var(--g-energy)" cx="30" cy="84" r="7"/><circle class="wd" style="--i:6;fill:var(--g-long)" cx="36" cy="30" r="7"/>
+      <circle class="wc" cx="100" cy="60" r="13"/>
+    </svg>
+    <h1 id="wTitle" class="logo">Supp<em>wise</em></h1>
+    <p class="wsub">Карта добавок без маркетинга: что работает, для чего и с чем не сочетается.</p>
+    <ul class="wlist" id="wList"></ul>
+    <div class="wbase"><b>С чего начать: «База»</b><p id="wBase"></p></div>
+    <div class="wbtns"><button class="chip wgo" id="wAdd" type="button">Добавить «Базу» в мой набор</button><button class="chip" id="wSkip" type="button">Просто посмотреть карту</button></div>
+    <p class="kind">Это справка, а не назначение. При приёме лекарств и хронических болезнях советуйся с врачом.</p>
+  </div>
+</div>
+<script src="data/supplements.js"></script>
+<script src="data/plan.js"></script>
+<script src="data/training.js"></script>
+<script src="data/problems.js"></script>
+<script src="js/app.js"></script>
+<script src="js/notes.js"></script>
+</body>
+</html>
