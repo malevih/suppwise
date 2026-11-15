@@ -450,3 +450,10 @@ svg#g.ego .spoke,svg#g.find .spoke,svg#g.ego .hub,svg#g.find .hub{opacity:0;poin
 .srcs{list-style:none;margin:0;padding:0;display:grid;gap:8px;font-size:13.5px}
 .srcs a{color:var(--ink);text-decoration:underline;text-decoration-color:var(--muted);text-underline-offset:3px}
 .srcs a:hover{text-decoration-color:var(--ink)}
+.gsrc{margin:2px 0 10px 20px;font-size:13px}
+.gsrc summary{cursor:pointer;color:var(--muted);list-style:none}
+.gsrc summary::-webkit-details-marker{display:none}
+.gsrc summary::before{content:"+ "}
+.gsrc[open] summary::before{content:"− "}
+.gsrc summary:hover{color:var(--ink)}
+.gsrc .srcs{margin-top:8px}

@@ -306,6 +306,7 @@ function layoutFocus(s,re){
     const a=-Math.PI/2+(i+.5)/slots*Math.PI*2;x.o.tx=cx+Math.cos(a)*rx;x.o.ty=cy+Math.sin(a)*ry;i++});
   heat(.5);
 }
+function srcList(src){return `<ul class="srcs">${src.map(x=>`<li><a href="${x.pmid?"https://pubmed.ncbi.nlm.nih.gov/"+x.pmid+"/":"https://pmc.ncbi.nlm.nih.gov/articles/"+x.pmc+"/"}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.y?` <span class="kind">${x.y}</span>`:""}${x.pmid&&x.pmc?` · <a href="https://pmc.ncbi.nlm.nih.gov/articles/${x.pmc}/" target="_blank" rel="noopener">полный текст</a>`:""}</li>`).join("")}</ul>`}
 function connList(n){
   const ord={syn:0,anti:1,warn:2};
   const rel=E.filter(e=>(e.a===n.id||e.b===n.id)&&visible(e)).sort((x,y)=>ord[x.t]-ord[y.t]||x.ev.localeCompare(y.ev));
@@ -354,7 +355,7 @@ function renderNote(){
     const inSet=mySet().has(n.id),inf=INFO[n.id]||{};
     note.innerHTML=`<div class="nhead"><span class="kind">${KIND(n.id)} · ${esc(n.name)}</span><div class="ntitle"><h2>${esc(n.en)}</h2><button class="addp" data-toggle="${n.id}" aria-pressed="${inSet}" title="${inSet?"В моём наборе — убрать":"Добавить в набор"}" aria-label="${inSet?"Убрать из набора":"Добавить в набор"}">${inSet?"✓":"+"}</button></div>${n.g.length?`<div class="gtags">${n.g.map(k=>`<button class="gtag" data-goal="${k}" style="--c:var(${G[k].c})">${G[k].en}</button>`).join("")}</div>`:""}</div>
       ${inf.what?`<section class="ns"><h4>Зачем нужен</h4><p>${esc(inf.what)}</p></section>`:""}
-      ${n.g.length?`<section class="ns"><h4>Для чего принимают</h4><ul class="glist">${n.g.map(k=>`<li><button data-goal="${k}"><span class="gdot" style="background:var(${G[k].c})"></span><span><b style="color:var(${G[k].c})">${G[k].en}</b><span class="t">${esc((inf.goals||{})[k]||"")}</span></span></button></li>`).join("")}</ul></section>`:""}
+      ${n.g.length?`<section class="ns"><h4>Для чего принимают</h4><ul class="glist">${n.g.map(k=>`<li><button data-goal="${k}"><span class="gdot" style="background:var(${G[k].c})"></span><span><b style="color:var(${G[k].c})">${G[k].en}</b><span class="t">${esc((inf.goals||{})[k]||"")}</span></span></button>${(SRC_S[n.id]||{})[k]?`<details class="gsrc"><summary>Источники · ${SRC_S[n.id][k].length}</summary>${srcList(SRC_S[n.id][k])}</details>`:""}</li>`).join("")}</ul></section>`:""}
       <section class="ns"><h4>Как принимать</h4><p class="how">${esc(n.tip)}</p></section>
       ${inf.forms?`<section class="ns"><h4>Какую форму брать</h4><ul class="forms">${inf.forms.map(([f,g,t])=>`<li><div class="fh"><b>${esc(f)}</b><span class="grade ${g}">${GR[g]}</span></div><span class="t">${esc(t)}</span></li>`).join("")}</ul></section>`:""}
       ${inf.buy?`<section class="ns"><h4>Важно</h4><p>${esc(inf.buy)}</p></section>`:""}
@@ -366,7 +367,7 @@ function renderNote(){
     const e=E[s.i];
     note.innerHTML=`<div><span class="kind"><span class="dot ${e.t}" style="display:inline-block;margin:0 6px 0 0"></span>${TNAME[e.t]} · данные ${e.ev}</span><h2>${esc(byId[e.a].en)} + ${esc(byId[e.b].en)}</h2></div>
       <p>${esc(e.txt)}</p>
-      ${(()=>{const src=SRC[e.a+"|"+e.b]||SRC[e.b+"|"+e.a];return src?`<section class="ns"><h4>Источники</h4><ul class="srcs">${src.map(x=>`<li><a href="${x.pmid?"https://pubmed.ncbi.nlm.nih.gov/"+x.pmid+"/":"https://pmc.ncbi.nlm.nih.gov/articles/"+x.pmc+"/"}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.y?` <span class="kind">${x.y}</span>`:""}${x.pmid&&x.pmc?` · <a href="https://pmc.ncbi.nlm.nih.gov/articles/${x.pmc}/" target="_blank" rel="noopener">полный текст</a>`:""}</li>`).join("")}</ul></section>`:'<p class="kind">Источники для этой связи ещё не проверены.</p>'})()}
+      ${(()=>{const src=SRC[e.a+"|"+e.b]||SRC[e.b+"|"+e.a];return src?`<section class="ns"><h4>Источники</h4>${srcList(src)}</section>`:'<p class="kind">Источники для этой связи ещё не проверены.</p>'})()}
       <ul class="list"><li><button data-n="${e.a}"><span></span><span>Все связи: <b>${esc(byId[e.a].en)}</b></span></button></li>
       <li><button data-n="${e.b}"><span></span><span>Все связи: <b>${esc(byId[e.b].en)}</b></span></button></li></ul>`;
   }
