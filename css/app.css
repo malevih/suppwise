@@ -1,11 +1,11 @@
 /* Layout: deliberate single dark theme. Deep black ground, white type, saturated colour only where it carries meaning (goals, relation types). */
 :root{
   color-scheme:dark;
-  --bg:#050506; --panel:#0D0E11; --raise:#15171B; --ink:#F3F2EE; --muted:#8C8F98; --faint:#2A2D33;
+  --bg:#08080A; --panel:#0F1013; --raise:#17181C; --ink:#EDEDEA; --muted:#8E9099; --faint:#26272C;
   --syn:#E9E7E0; --good:#46E08A;
-  --pt-life:#25E0D0; --pt-food:#FFE04A; --pt-train:#FF4F9A; --pt-supp:#B58CFF; --pt-med:#46E08A; --anti:#FF3D57; --warn:#FFB224;
-  --g-long:#B58CFF; --g-infl:#FF8A3D; --g-sleep:#4D7CFF; --g-energy:#FFE04A;
-  --g-brain:#25E0D0; --g-heart:#FF4F9A; --g-bones:#E6DCC4; --g-immune:#8FE04A;
+  --pt-life:#6FBFB7; --pt-food:#D2BF6C; --pt-train:#D48DA6; --pt-supp:#A79BE0; --pt-med:#93BF78; --anti:#E5565B; --warn:#D9A648;
+  --g-long:#A79BE0; --g-infl:#D99A6C; --g-sleep:#7E97E6; --g-energy:#D2BF6C;
+  --g-brain:#6FBFB7; --g-heart:#D48DA6; --g-bones:#C9C2B0; --g-immune:#93BF78;
   --f-body:"Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono:"JetBrains Mono", ui-monospace, Menlo, monospace;
 }
@@ -54,7 +54,7 @@ button{font:inherit}
 .chip[aria-pressed="true"] .ln.syn{border-color:var(--bg)}
 .chk{display:inline-flex;gap:7px;align-items:center;font-size:13px;color:var(--muted);cursor:pointer;margin-left:6px}
 
-.stage{background:radial-gradient(ellipse at 50% 45%,#121319 0%,var(--panel) 55%,var(--bg) 100%);border:1px solid var(--faint);border-radius:14px;min-width:0;overflow:hidden}
+.stage{background:var(--panel);border:1px solid var(--faint);border-radius:14px;min-width:0;overflow:hidden}
 svg#g{display:block;width:100%;user-select:none;-webkit-user-select:none;touch-action:pan-y}
 .edge{stroke-linecap:round;transition:opacity .25s}
 .edge.syn{stroke:var(--syn);stroke-opacity:.55;stroke-dasharray:5 7;animation:flow 1.4s linear infinite}
@@ -437,3 +437,11 @@ svg#g.ego .spoke,svg#g.find .spoke,svg#g.ego .hub,svg#g.find .hub{opacity:0;poin
   .chk{min-height:40px}
   .maphelp,.mapback{min-height:40px}
 }
+/* names of supplements are set in the monospace face, like identifiers in a catalog */
+.node .nm{font:500 10.5px var(--f-mono);letter-spacing:-.01em}
+.nhead h2,.trow .pr,.note .list b,.goalcard b,.hub text{font-family:var(--f-mono);letter-spacing:-.02em}
+.nhead h2{font-size:19px}
+.hub text{font-size:11px;font-weight:700}
+.hub.sm text{font-size:9.5px}
+.hub circle{fill-opacity:.1;stroke-width:1.2}
+.node .arc{stroke-width:2.5px}
